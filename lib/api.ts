@@ -12,6 +12,7 @@ import {
   researchAreas,
   researchOverview,
   researchProjects,
+  seminarNote,
   supervision,
   supervisionStats,
 } from "./content/research";
@@ -38,6 +39,7 @@ export async function getResearch() {
     areas: researchAreas,
     projects: researchProjects,
     presentations: conferencePresentations,
+    seminarNote,
     supervision,
     supervisionStats,
     collaborations,
@@ -48,8 +50,13 @@ export async function getResearchAreas() {
   return researchAreas;
 }
 
+/** Books in the order of Prof. Mehta's own list (criticism → research → edited → series). */
 export async function getPublications() {
-  return [...publications].sort((a, b) => b.year - a.year);
+  return publications;
+}
+
+export async function getFeaturedPublications(limit = 6) {
+  return publications.filter((p) => p.featured).slice(0, limit);
 }
 
 export async function getTeaching() {

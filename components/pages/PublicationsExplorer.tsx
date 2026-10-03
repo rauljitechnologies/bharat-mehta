@@ -7,7 +7,7 @@ import type { Publication, PublicationCategory } from "@/lib/types";
 import { buttonClasses } from "../ui/Button";
 import { PublicationCard } from "../ui/PublicationCard";
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 12;
 
 const selectClass =
   "h-11 w-full rounded-lg border border-line bg-white px-3 text-[0.9375rem] text-ink hover:border-navy/30 focus:border-navy focus:ring-2 focus:ring-gold/40 focus:outline-none";
@@ -30,7 +30,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
   }, []);
 
   const years = useMemo(
-    () => [...new Set(publications.map((p) => p.year))].sort((a, b) => b - a),
+    () => [...new Set(publications.flatMap((p) => (p.year ? [p.year] : [])))].sort((a, b) => b - a),
     [publications],
   );
 
@@ -41,7 +41,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
         (!category || p.category === category) &&
         (!year || p.year === Number(year)) &&
         (!q ||
-          [p.title, p.titleEn, p.venue, p.description, ...p.keywords].join(" ").toLowerCase().includes(q)),
+          [p.title, p.titleEn, p.byline, p.publisher, p.description, ...p.keywords].join(" ").toLowerCase().includes(q)),
     );
   }, [publications, query, category, year]);
 
@@ -66,7 +66,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
         role="search"
         aria-label="પ્રકાશનો શોધો (Search publications)"
         onSubmit={(e) => e.preventDefault()}
-        className="card grid gap-3 p-4 sm:p-5 md:grid-cols-[1fr_12rem_9rem_auto] md:items-end"
+        className={`card grid gap-3 p-4 sm:p-5 md:items-end ${years.length ? "md:grid-cols-[1fr_15rem_9rem_auto]" : "md:grid-cols-[1fr_17rem_auto]"}`}
       >
         <div>
           <label htmlFor="pub-q" className="text-sm font-semibold text-ink">
@@ -82,7 +82,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
                 setQuery(e.target.value);
                 setVisible(PAGE_SIZE);
               }}
-              placeholder="શીર્ષક, સામયિક, વિષય…"
+              placeholder="શીર્ષક, લેખક, વિષય…"
               className={`${selectClass} pl-9`}
             />
           </div>
@@ -108,6 +108,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
             ))}
           </select>
         </div>
+        {years.length > 0 && (
         <div>
           <label htmlFor="pub-year" className="text-sm font-semibold text-ink">
             વર્ષ (Year)
@@ -129,6 +130,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
             ))}
           </select>
         </div>
+        )}
         <button type="button" onClick={reset} disabled={!hasFilters} className={buttonClasses("outline", "h-11")}>
           <X className="size-4" aria-hidden="true" /> રીસેટ
         </button>
@@ -145,7 +147,7 @@ export function PublicationsExplorer({ publications }: { publications: Publicati
           <p className="mt-1 text-muted">અન્ય શબ્દ અજમાવો અથવા ફિલ્ટર રીસેટ કરો.</p>
         </div>
       ) : (
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
+        <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filtered.slice(0, visible).map((p) => (
             <PublicationCard key={p.slug} publication={p} headingLevel="h2" />
           ))}

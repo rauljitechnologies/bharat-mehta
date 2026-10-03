@@ -1,7 +1,10 @@
 import type { BlogCategory, BlogPost } from "../types";
 import { images } from "./images";
 
-/** PLACEHOLDER posts — sample academic updates written for the prototype. */
+/**
+ * The felicitation post is real (from the event banner). The other posts are
+ * SAMPLE content from the website brief — replace or remove before launch.
+ */
 
 export const blogCategoryLabels: Record<BlogCategory, string> = {
   publication: "પ્રકાશન",
@@ -14,6 +17,33 @@ export const blogCategoryLabels: Record<BlogCategory, string> = {
 const author = "ડૉ. ભરત મહેતા";
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "pro-bharat-mehta-abhivadan-samaroh-2026",
+    title: "પ્રો. ભરત મહેતા અભિવાદન સમારોહ",
+    excerpt:
+      "ગુજરાતી વિભાગ, ફેકલ્ટી ઑફ આર્ટ્સ, M.S. યુનિવર્સિટી ઑફ બરોડા દ્વારા પ્રો. ભરત મહેતાના અભિવાદન સમારોહનું આયોજન કરવામાં આવ્યું.",
+    category: "event",
+    date: "2026-08-08",
+    author,
+    image: images.felicitation,
+    tags: ["અભિવાદન", "ગુજરાતી વિભાગ"],
+    featured: true,
+    content: [
+      {
+        type: "p",
+        text: "ગુજરાતી વિભાગ, ફેકલ્ટી ઑફ આર્ટ્સ, ધ મહારાજા સયાજીરાવ યુનિવર્સિટી ઑફ બરોડા દ્વારા શનિવાર, 8 ઑગસ્ટ 2026ના રોજ ફેકલ્ટી ઑફ આર્ટ્સના સેમિનાર હૉલમાં ‘પ્રો. ભરત મહેતા અભિવાદન સમારોહ’ યોજાયો.",
+      },
+      {
+        type: "p",
+        text: "1991થી ગુજરાતી વિભાગમાં અધ્યાપન, 40 પ્રકાશિત પુસ્તકો, Ph.D. માર્ગદર્શન અને ગુજરાતી સાહિત્ય પરિષદ તથા ‘અક્ષરા’ જેવી સંસ્થાઓમાં નેતૃત્વ — આ અવસરે આ સુદીર્ઘ શૈક્ષણિક યાત્રાનું અભિવાદન કરવામાં આવ્યું.",
+      },
+      {
+        type: "quote",
+        text: "સાચી શૈક્ષણિક સફળતા માત્ર પ્રકાશનો અને સિદ્ધિઓથી નહીં, પરંતુ આપણે જે જીવનોને સ્પર્શીએ છીએ તેનાથી મપાય છે.",
+        cite: "પ્રો. ભરત મહેતા",
+      },
+    ],
+  },
   {
     slug: "navu-pustak-gujarati-adhunik-sahitya",
     title: "નવું પુસ્તક: ગુજરાતી આધુનિક સાહિત્ય — પરિપ્રેક્ષ્ય અને પ્રવાહો",

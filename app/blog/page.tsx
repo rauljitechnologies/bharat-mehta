@@ -85,6 +85,7 @@ export default async function BlogPage() {
         </div>
       </section>
 
+      {events.length > 0 && (
       <section aria-labelledby="events-title" className="section bg-white">
         <div className="container-site">
           <SectionHeading id="events-title" eyebrow="Upcoming Events" title="આગામી શૈક્ષણિક કાર્યક્રમો" />
@@ -116,6 +117,7 @@ export default async function BlogPage() {
           </ul>
         </div>
       </section>
+      )}
     </>
   );
 }

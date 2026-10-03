@@ -70,7 +70,7 @@ export function Footer({ profile, nav }: { profile: ProfessorProfile; nav: NavIt
         <div className="container-site flex flex-col gap-2 py-5 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Dr. Bharat Mehta. All Rights Reserved.</p>
           <p>
-            ફોટોગ્રાફ્સ: Wikimedia Commons ·{" "}
+            ફોટોગ્રાફ્સ ·{" "}
             <Link href="/about#credits" className="underline decoration-white/30 underline-offset-4 hover:text-gold-light">
               શ્રેય (Credits)
             </Link>

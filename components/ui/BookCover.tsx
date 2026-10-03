@@ -13,14 +13,14 @@ const tones: Record<NonNullable<Publication["coverTone"]>, string> = {
 
 /**
  * Uses a real cover when the CMS provides one; otherwise draws an elegant
- * typographic cover so every card keeps the same 3:4 proportion.
+ * typographic cover so every card keeps the same 2:3 proportion.
  */
 export function BookCover({ publication, className }: { publication: Publication; className?: string }) {
   const { cover, title, year, category, coverTone = "navy" } = publication;
   if (cover) {
     return (
-      <div className={cn("relative aspect-[3/4] overflow-hidden rounded-md", className)}>
-        <Image src={cover.src} alt={cover.alt} fill sizes="200px" className="object-cover" />
+      <div className={cn("relative aspect-[2/3] overflow-hidden rounded-md bg-navy-50 shadow-[inset_6px_0_0_rgb(0_0_0/0.12),0_10px_24px_-14px_rgb(0_0_0/0.6)]", className)}>
+        <Image src={cover.src} alt={cover.alt} fill sizes="(min-width:640px) 160px, 120px" className="object-cover" />
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function BookCover({ publication, className }: { publication: Publication
       role="img"
       aria-label={`${title} — મુખપૃષ્ઠ (cover)`}
       className={cn(
-        "relative flex aspect-[3/4] flex-col overflow-hidden rounded-md p-3 text-white shadow-[inset_6px_0_0_rgb(0_0_0/0.18),0_10px_24px_-14px_rgb(0_0_0/0.6)]",
+        "relative flex aspect-[2/3] flex-col overflow-hidden rounded-md p-3 text-white shadow-[inset_6px_0_0_rgb(0_0_0/0.18),0_10px_24px_-14px_rgb(0_0_0/0.6)]",
         tones[coverTone],
         className,
       )}
@@ -43,7 +43,7 @@ export function BookCover({ publication, className }: { publication: Publication
       <span className="relative my-auto line-clamp-5 px-1 text-center font-serif text-[0.8rem] leading-snug font-bold">
         {title}
       </span>
-      <span className="relative text-center text-[0.6rem] text-white/70">ભરત મહેતા · {year}</span>
+      <span className="relative text-center text-[0.6rem] text-white/70">ભરત મહેતા{year ? ` · ${year}` : ""}</span>
     </div>
   );
 }

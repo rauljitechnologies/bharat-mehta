@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Award, Download, Mail, Users } from "lucide-react";
+import Image from "next/image";
+import { Award, Download, Mail, Quote, Users } from "lucide-react";
 import { Arrow, ButtonLink, buttonClasses } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -63,10 +64,9 @@ export default async function AboutPage() {
               {profile.nameEn} · {profile.titleEn}, {profile.departmentEn}, {profile.universityEn}
             </p>
             <div className="mt-6 space-y-4 text-[1.0625rem]" data-reveal>
-              {profile.bio.map((p) => (
+              {[...profile.bio, ...profile.bioExtended].map((p) => (
                 <p key={p}>{p}</p>
               ))}
-              <p>{profile.shortBio}</p>
             </div>
 
             <dl className="mt-10 grid gap-4 sm:grid-cols-2" data-reveal>
@@ -155,7 +155,9 @@ export default async function AboutPage() {
                   <Award className="mt-0.5 size-5 shrink-0 text-gold" aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-navy">{a.title}</p>
-                    <p className="text-sm text-muted">{a.body}</p>
+                    <p className="text-sm text-muted">
+                      {[a.body, a.year].filter(Boolean).join(" · ")}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -164,7 +166,7 @@ export default async function AboutPage() {
 
           <section aria-labelledby="memberships-title" data-reveal>
             <h2 id="memberships-title" className="font-serif text-2xl font-bold text-navy">
-              વ્યાવસાયિક સભ્યપદ
+              નેતૃત્વ અને સંસ્થાકીય સેવા
             </h2>
             <span className="gold-rule mt-3" aria-hidden="true" />
             <ul className="mt-6 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-white">
@@ -173,12 +175,66 @@ export default async function AboutPage() {
                   <Users className="mt-1 size-4 shrink-0 text-gold-dark" aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-navy">{m.name}</p>
-                    <p className="text-sm text-muted">{m.role}</p>
+                    <p className="text-sm text-muted">
+                      {m.role}
+                      {m.period && ` · ${m.period}`}
+                    </p>
                   </div>
                 </li>
               ))}
             </ul>
           </section>
+        </div>
+      </section>
+
+      {/* Philosophy quote */}
+      <section aria-label="શૈક્ષણિક દર્શન (Academic philosophy)" className="relative overflow-hidden bg-navy-dark py-16 text-white md:py-20">
+        <div className="container-site max-w-4xl text-center" data-reveal>
+          <Quote className="mx-auto size-10 text-gold" aria-hidden="true" />
+          <blockquote className="mt-6">
+            <p className="font-serif text-xl leading-relaxed sm:text-2xl">{profile.quote.translation}</p>
+            <p lang="en" className="mt-5 text-base text-white/70 italic">“{profile.quote.text}”</p>
+          </blockquote>
+          <p className="mt-6 text-sm font-semibold text-gold-light">— {profile.name}</p>
+        </div>
+      </section>
+
+      {/* Fellowships */}
+      <section aria-labelledby="fellowships-title" className="section">
+        <div className="container-site">
+          <SectionHeading id="fellowships-title" eyebrow="Fellowships & Projects" title="ફેલોશિપ અને સંશોધન પ્રોજેક્ટ" />
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {profile.fellowships.map((f) => (
+              <li key={f.body + f.period} className="card p-5" data-reveal>
+                <p className="text-sm font-semibold text-gold-dark">{f.period}</p>
+                <p className="mt-1 font-bold text-navy">{f.title}</p>
+                <p className="text-[0.9375rem] text-ink/80">{f.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Photo gallery */}
+      <section aria-labelledby="gallery-title" className="section bg-white">
+        <div className="container-site">
+          <SectionHeading id="gallery-title" eyebrow="Moments" title="ક્ષણચિત્રો" />
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {[images.lecture, images.felicitation, images.booksStack].map((img) => (
+              <figure key={img.src} className="group" data-reveal>
+                <div className="relative aspect-[3/2] overflow-hidden rounded-[var(--radius-card)] bg-navy-50">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(min-width:768px) 400px, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <figcaption className="mt-3 text-sm text-muted">{img.alt.split(" — ")[0]}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -189,9 +245,7 @@ export default async function AboutPage() {
             ફોટોગ્રાફ શ્રેય (Image credits)
           </h2>
           <ul className="mt-4 grid gap-x-8 gap-y-1.5 text-sm text-muted md:grid-cols-2">
-            {Object.values(images).map((img) => (
-              <li key={img.src}>{img.credit}</li>
-            ))}
+            {Object.values(images).flatMap((img) => ("credit" in img ? [<li key={img.src}>{img.credit}</li>] : []))}
           </ul>
         </div>
       </section>

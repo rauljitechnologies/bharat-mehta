@@ -35,8 +35,8 @@ export async function buildSearchIndex(): Promise<SearchItem[]> {
     ...pubs.map((p) => ({
       title: p.title,
       href: `/publications?q=${encodeURIComponent(p.title)}`,
-      kind: `${publicationCategoryLabels[p.category].gu} · ${p.year}`,
-      text: `${p.titleEn ?? ""} ${p.venue} ${p.keywords.join(" ")}`,
+      kind: publicationCategoryLabels[p.category].gu,
+      text: `${p.titleEn ?? ""} ${p.byline ?? ""} ${p.keywords.join(" ")}`,
     })),
     ...posts.map((p) => ({
       title: p.title,

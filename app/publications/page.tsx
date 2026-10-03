@@ -4,19 +4,20 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
 import { getPublications } from "@/lib/api";
 import { images } from "@/lib/content/images";
+import { publicationCategoryLabels } from "@/lib/content/publications";
 import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "પ્રકાશનો — પુસ્તકો, સંશોધન લેખો અને શોધપત્રો",
+  title: "પ્રકાશનો — વિવેચન, સંશોધન અને સંપાદનનાં પુસ્તકો",
   description:
-    "ડૉ. ભરત મહેતાનાં પુસ્તકો, સંશોધન લેખો, શોધપત્રો, પરિસંવાદ પત્રો અને અન્ય પ્રકાશનો — વર્ષ, શ્રેણી અને મુખ્ય શબ્દ દ્વારા શોધો. Publications on Gujarati literature and language.",
+    "પ્રો. ભરત મહેતાનાં પ્રકાશિત પુસ્તકો — પ્રતિબદ્ધ, કલાકારનો ઇતિહાસબોધ, ચાર નવલકથાકારો, સમકાલીન ગુજરાતી નવલકથા સહિત વિવેચન, સંશોધન અને સંપાદન. Books by Prof. Bharat Mehta on Gujarati literary criticism.",
   path: "/publications",
 });
 
 export default async function PublicationsPage() {
   const publications = await getPublications();
-  const books = publications.filter((p) => p.category === "book").length;
+  const authored = publications.filter((p) => p.role === "author").length;
 
   return (
     <>
@@ -30,13 +31,16 @@ export default async function PublicationsPage() {
             "@type": "ListItem",
             position: i + 1,
             item: {
-              "@type": p.category === "book" ? "Book" : "ScholarlyArticle",
+              "@type": "Book",
               name: p.title,
               ...(p.titleEn ? { alternateName: p.titleEn } : {}),
               inLanguage: "gu",
-              datePublished: String(p.year),
-              author: { "@type": "Person", name: siteConfig.nameEn },
-              ...(p.category === "book" ? { publisher: p.venue } : { isPartOf: p.venue }),
+              genre: publicationCategoryLabels[p.category].en,
+              ...(p.year ? { datePublished: String(p.year) } : {}),
+              ...(p.cover ? { image: absoluteUrl(p.cover.src) } : {}),
+              [p.role === "editor" ? "editor" : "author"]: { "@type": "Person", name: siteConfig.nameEn },
+              ...(p.publisher ? { publisher: { "@type": "Organization", name: p.publisher } } : {}),
+              ...(p.award ? { award: p.award } : {}),
             },
           })),
         }}
@@ -44,15 +48,15 @@ export default async function PublicationsPage() {
       <PageHero
         eyebrow="Publications"
         title="પ્રકાશનો"
-        description="પુસ્તકો, સંશોધન લેખો, શોધપત્રો અને શૈક્ષણિક પ્રકાશનો — ગુજરાતી સાહિત્ય અને ભાષાના અભ્યાસમાં યોગદાન."
-        image={images.library}
+        description="વિવેચન, સંશોધન, સંપાદન, સર્જન સ્વાધ્યાય-શ્રેણી અને ફિલ્મ-આસ્વાદ શ્રેણીનાં પ્રકાશિત પુસ્તકો."
+        image={images.booksStack}
         crumbs={[{ name: "પ્રકાશનો", path: "/publications" }]}
       >
         <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
           {[
-            { v: publications.length, l: "કુલ પ્રકાશનો" },
-            { v: books, l: "પુસ્તકો" },
-            { v: publications.length - books, l: "લેખ અને શોધપત્રો" },
+            { v: publications.length, l: "પ્રકાશિત પુસ્તકો" },
+            { v: authored, l: "વિવેચન અને સંશોધન" },
+            { v: publications.length - authored, l: "સંપાદન અને શ્રેણી" },
           ].map((s) => (
             <div key={s.l} className="flex flex-col-reverse">
               <dt className="text-sm text-white/70">{s.l}</dt>

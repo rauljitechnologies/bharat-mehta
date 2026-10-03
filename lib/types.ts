@@ -78,8 +78,12 @@ export interface ProfessorProfile {
   experience: TimelineItem[];
   interests: string[];
   responsibilities: string[];
+  bioExtended: string[];
+  quote: { text: string; translation: string };
   awards: { year: string; title: string; body: string }[];
-  memberships: { name: string; role: string }[];
+  fellowships: { title: string; body: string; period: string }[];
+  /** Leadership roles in literary / academic bodies */
+  memberships: { name: string; role: string; period?: string }[];
   social: { facebook?: string; twitter?: string; linkedin?: string };
 }
 
@@ -99,7 +103,7 @@ export interface ResearchProject {
   period: string;
   status: "ongoing" | "completed";
   role: string;
-  summary: string;
+  summary?: string;
 }
 
 export interface ConferencePresentation {
@@ -123,26 +127,27 @@ export interface Collaboration {
   place: string;
 }
 
+/** Categories as used in Prof. Mehta's own list of published books */
 export type PublicationCategory =
-  | "book"
-  | "research-paper"
-  | "journal-article"
-  | "conference-paper"
-  | "other";
+  | "criticism" // વિવેચન
+  | "research" // સંશોધન
+  | "edited" // સંપાદન
+  | "study-series" // સર્જન સ્વાધ્યાય-શ્રેણી
+  | "film-series"; // ફિલ્મ-આસ્વાદ શ્રેણી
 
 export interface Publication {
   slug: string;
   title: string;
   titleEn?: string;
   category: PublicationCategory;
-  year: number;
-  /** Publisher for books, journal / proceedings name otherwise */
-  venue: string;
+  /** Original author for edited / study-series volumes, e.g. "હરમાન હેસકૃત" */
+  byline?: string;
+  role: "author" | "editor";
+  year?: number;
+  publisher?: string;
   description: string;
   keywords: string[];
-  isbn?: string;
-  pages?: string;
-  coAuthors?: string[];
+  award?: string;
   /** Optional real cover; otherwise a typographic cover is generated */
   cover?: ImageAsset;
   coverTone?: "navy" | "maroon" | "forest" | "ink" | "sand";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarDays } from "lucide-react";
+import { Award, CalendarDays } from "lucide-react";
 import { publicationCategoryLabels } from "@/lib/content/publications";
 import type { Publication } from "@/lib/types";
 import { BookCover } from "./BookCover";
@@ -15,13 +15,22 @@ export function PublicationCard({ publication, headingLevel = "h3" }: { publicat
           <span className="rounded bg-gold-50 px-2 py-0.5 font-semibold text-gold-dark ring-1 ring-gold/20">
             {publicationCategoryLabels[publication.category].gu}
           </span>
-          <span className="inline-flex items-center gap-1 text-muted">
-            <CalendarDays className="size-3.5" aria-hidden="true" />
-            {publication.year}
-          </span>
+          {publication.year && (
+            <span className="inline-flex items-center gap-1 text-muted">
+              <CalendarDays className="size-3.5" aria-hidden="true" />
+              {publication.year}
+            </span>
+          )}
+          <span className="text-muted">{publication.role === "editor" ? "સંપાદન" : "લેખન"}</span>
         </div>
         <Heading className="mt-2 text-[1.0625rem] leading-snug font-bold text-navy">{publication.title}</Heading>
-        <p className="mt-1 text-xs text-muted">{publication.venue}</p>
+        {publication.byline && <p className="mt-0.5 text-sm text-ink/75">{publication.byline}</p>}
+        {publication.publisher && <p className="mt-1 text-xs text-muted">{publication.publisher}</p>}
+        {publication.award && (
+          <p className="mt-2 inline-flex items-start gap-1.5 text-xs font-semibold text-gold-dark">
+            <Award className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" /> {publication.award}
+          </p>
+        )}
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{publication.description}</p>
         <Link
           href={`/publications?q=${encodeURIComponent(publication.title)}#${publication.slug}`}

@@ -29,7 +29,7 @@ const toc = [
   { href: "#overview", label: "ઝાંખી" },
   { href: "#areas", label: "સંશોધન ક્ષેત્રો" },
   { href: "#projects", label: "પ્રોજેક્ટ" },
-  { href: "#papers", label: "શોધપત્રો" },
+  { href: "#papers", label: "સંશોધન ગ્રંથો" },
   { href: "#presentations", label: "પરિસંવાદો" },
   { href: "#supervision", label: "માર્ગદર્શન" },
   { href: "#collaborations", label: "સહયોગ" },
@@ -37,7 +37,7 @@ const toc = [
 
 export default async function ResearchPage() {
   const [research, publications] = await Promise.all([getResearch(), getPublications()]);
-  const papers = publications.filter((p) => p.category === "research-paper" || p.category === "journal-article").slice(0, 4);
+  const researchBooks = publications.filter((p) => p.category === "research");
 
   return (
     <>
@@ -113,10 +113,15 @@ export default async function ResearchPage() {
 
       <section id="projects" aria-labelledby="projects-title" className="section scroll-mt-36">
         <div className="container-site">
-          <SectionHeading id="projects-title" eyebrow="Research Projects" title="સંશોધન પ્રોજેક્ટ" />
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          <SectionHeading
+            id="projects-title"
+            eyebrow="Research Projects & Fellowships"
+            title="સંશોધન પ્રોજેક્ટ અને ફેલોશિપ"
+            description="રાષ્ટ્રીય સંસ્થાઓ અને યુનિવર્સિટી દ્વારા સમર્થિત સંશોધન."
+          />
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {research.projects.map((p) => (
-              <article key={p.title} data-reveal className="card flex flex-col p-6">
+              <article key={p.funder + p.period} data-reveal className="card flex flex-col p-6">
                 <div className="flex items-center justify-between gap-3">
                   <span
                     className={cn(
@@ -124,13 +129,13 @@ export default async function ResearchPage() {
                       p.status === "ongoing" ? supervisionStatus.ongoing.className : supervisionStatus.awarded.className,
                     )}
                   >
-                    {p.status === "ongoing" ? "ચાલુ પ્રોજેક્ટ" : "પૂર્ણ પ્રોજેક્ટ"}
+                    {p.period}
                   </span>
                   <span className="text-xs text-muted">{p.role}</span>
                 </div>
                 <h3 className="mt-4 text-lg leading-snug font-bold text-navy">{p.title}</h3>
-                <p className="mt-2 flex-1 text-[0.9375rem] text-muted">{p.summary}</p>
-                <p className="mt-4 border-t border-line pt-3 text-sm font-medium text-ink/80">{p.funder}</p>
+                <p className="mt-1 flex-1 text-[0.9375rem] text-ink/80">{p.funder}</p>
+                {p.summary && <p className="mt-2 text-[0.9375rem] text-muted">{p.summary}</p>}
               </article>
             ))}
           </div>
@@ -140,13 +145,13 @@ export default async function ResearchPage() {
       <section id="papers" aria-labelledby="papers-title" className="section scroll-mt-36 bg-white">
         <div className="container-site">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading id="papers-title" eyebrow="Research Papers" title="શોધપત્રો અને સંશોધન લેખો" />
+            <SectionHeading id="papers-title" eyebrow="Research Publications" title="સંશોધન ગ્રંથો" />
             <ButtonLink href="/publications" variant="outline" className="self-start md:self-auto">
               બધાં પ્રકાશનો <Arrow />
             </ButtonLink>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {papers.map((p) => (
+            {researchBooks.map((p) => (
               <PublicationCard key={p.slug} publication={p} />
             ))}
           </div>
@@ -155,8 +160,12 @@ export default async function ResearchPage() {
 
       <section id="presentations" aria-labelledby="presentations-title" className="section scroll-mt-36">
         <div className="container-site">
-          <SectionHeading id="presentations-title" eyebrow="Conference Presentations" title="પરિસંવાદ પ્રસ્તુતિઓ" />
-          <ul className="mt-12 divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
+          <SectionHeading id="presentations-title" eyebrow="Seminars & Conferences" title="પરિસંવાદો અને પરિષદો" />
+          <p className="mt-8 max-w-3xl text-[1.0625rem] text-ink/85" data-reveal>
+            {research.seminarNote}
+          </p>
+          {research.presentations.length > 0 && (
+          <ul className="mt-10 divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
             {research.presentations.map((p) => (
               <li key={p.title} className="grid gap-3 p-5 sm:grid-cols-[5rem_1fr_auto] sm:items-center sm:gap-6 sm:p-6" data-reveal>
                 <span className="font-serif text-2xl font-bold text-gold">{p.year}</span>
@@ -177,6 +186,7 @@ export default async function ResearchPage() {
               </li>
             ))}
           </ul>
+          )}
         </div>
       </section>
 
@@ -191,6 +201,7 @@ export default async function ResearchPage() {
               </div>
             ))}
           </dl>
+          {research.supervision.length > 0 && (
           <div className="mt-8 overflow-x-auto rounded-[var(--radius-card)] border border-white/10" data-reveal>
             <table className="w-full min-w-[36rem] text-left text-[0.9375rem]">
               <caption className="sr-only">માર્ગદર્શિત સંશોધનોની યાદી (Supervised research)</caption>
@@ -216,6 +227,7 @@ export default async function ResearchPage() {
               </tbody>
             </table>
           </div>
+          )}
         </div>
       </section>
 

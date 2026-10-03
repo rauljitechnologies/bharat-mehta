@@ -5,6 +5,40 @@ import type { ImageAsset } from "../types";
  * (credits below and on /about#credits). Swap for CMS assets later.
  */
 export const images = {
+  portrait: {
+    src: "/images/prof-bharat-mehta-portrait.webp",
+    alt: "પ્રો. ભરત મહેતા — Prof. Bharat Mehta, Professor of Gujarati, M.S. University of Baroda",
+    width: 800,
+    height: 1000,
+    credit: "પ્રો. ભરત મહેતા — portrait © Prof. Bharat Mehta",
+  },
+  headshot: {
+    src: "/images/prof-bharat-mehta-headshot.webp",
+    alt: "પ્રો. ભરત મહેતા",
+    width: 400,
+    height: 400,
+  },
+  lecture: {
+    src: "/images/prof-bharat-mehta-lecture.webp",
+    alt: "વ્યાસપીઠ પરથી વક્તવ્ય આપતા પ્રો. ભરત મહેતા — Prof. Bharat Mehta speaking at a lectern",
+    width: 1200,
+    height: 800,
+    credit: "વક્તવ્ય — © Prof. Bharat Mehta",
+  },
+  felicitation: {
+    src: "/images/abhivadan-samaroh-2026.webp",
+    alt: "‘પ્રો. ભરત મહેતા અભિવાદન સમારોહ’માં પુષ્પગુચ્છથી સન્માન — Felicitation ceremony for Prof. Bharat Mehta, Faculty of Arts, M.S. University",
+    width: 1200,
+    height: 800,
+    credit: "અભિવાદન સમારોહ, 2026 — © Prof. Bharat Mehta",
+  },
+  booksStack: {
+    src: "/images/bharat-mehta-books-stack.webp",
+    alt: "પ્રો. ભરત મહેતાનાં પ્રકાશિત પુસ્તકોનો થપ્પો — Stack of books published by Prof. Bharat Mehta",
+    width: 1200,
+    height: 800,
+    credit: "પ્રકાશિત પુસ્તકો — © Prof. Bharat Mehta",
+  },
   heroDome: {
     src: "/images/msu-faculty-of-arts-dome.webp",
     alt: "M.S. યુનિવર્સિટી, વડોદરાની કલા વિદ્યાશાખાનો ઐતિહાસિક ગુંબજ — Heritage dome of the Faculty of Arts, M.S. University of Baroda",

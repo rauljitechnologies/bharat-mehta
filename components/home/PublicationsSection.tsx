@@ -20,6 +20,7 @@ export function PublicationsSection({ publications, tabs }: { publications: Publ
   const tab = tabs.find((t) => t.id === active) ?? tabs[0];
   const items = publications
     .filter((p) => tab.categories === "all" || tab.categories.includes(p.category))
+    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured))
     .slice(0, 6);
 
   const onKeyDown = (e: React.KeyboardEvent, index: number) => {
@@ -40,7 +41,7 @@ export function PublicationsSection({ publications, tabs }: { publications: Publ
             id="publications-title"
             eyebrow="Publications"
             title="પ્રકાશનો"
-            description="પુસ્તકો, સંશોધન લેખો, શોધપત્રો અને સંપાદનો — ગુજરાતી સાહિત્ય અને ભાષાના અભ્યાસમાં યોગદાન."
+            description="વિવેચન, સંશોધન અને સંપાદનનાં 40 પુસ્તકો — ગુજરાતી સાહિત્યના અભ્યાસમાં યોગદાન."
           />
           <ButtonLink href="/publications" variant="outline" className="self-start md:self-auto">
             બધાં પ્રકાશનો <Arrow />

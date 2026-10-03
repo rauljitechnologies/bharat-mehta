@@ -7,11 +7,11 @@ import type {
   SupervisionRecord,
 } from "../types";
 
-/** PLACEHOLDER research content — replace with verified records / CMS data. */
+/** Projects, fellowships, supervision and roles: from Prof. Mehta's 2026 promotion presentation. */
 
 export const researchOverview = [
-  "મારું સંશોધન ગુજરાતી સાહિત્યને તેના સામાજિક, સાંસ્કૃતિક અને ભાષાકીય સંદર્ભમાં સમજવાનો પ્રયાસ છે. મધ્યકાલીન કવિતાથી લઈને અનુઆધુનિક નવલકથા સુધી, સાહિત્ય સમાજની ચેતના કેવી રીતે ઘડે છે અને સમાજ સાહિત્યને કેવી રીતે ઘડે છે — એ મારા અભ્યાસનો કેન્દ્રીય પ્રશ્ન છે.",
-  "લોકસાહિત્ય અને મૌખિક પરંપરાના ક્ષેત્રકાર્ય, ભાષાવિજ્ઞાનીય વિશ્લેષણ અને આધુનિક વિવેચન સિદ્ધાંતોને જોડીને હું આંતરવિદ્યાકીય સંશોધન પદ્ધતિ અપનાવું છું.",
+  "મારું સંશોધન ગુજરાતી કથાસાહિત્ય — નવલકથા અને નવલિકા —ના વિવેચનથી લઈને ભારતીય તથા વિશ્વ સાહિત્યના તુલનાત્મક અધ્યયન સુધી વિસ્તરેલું છે. સાહિત્ય સમાજની ચેતના કેવી રીતે ઘડે છે અને સમાજ સાહિત્યને કેવી રીતે ઘડે છે — એ મારા અભ્યાસનો કેન્દ્રીય પ્રશ્ન છે.",
+  "‘કલાકારનો ઇતિહાસબોધ’, ‘ચાર નવલકથાકારો’ અને ‘આર્નોલ્ડનો કાવ્યવિચાર’ જેવા સંશોધન ગ્રંથો ઉપરાંત IIAS શિમલા, સાહિત્ય અકાદમી, સંસ્કૃતિ વિભાગ (ભારત સરકાર) અને UGCની ફેલોશિપ તથા સંશોધન પ્રોજેક્ટ દ્વારા આ કાર્ય આગળ વધ્યું છે.",
 ];
 
 export const researchAreas: ResearchArea[] = [
@@ -78,118 +78,51 @@ export const researchAreas: ResearchArea[] = [
 ];
 
 export const researchProjects: ResearchProject[] = [
-  {
-    title: "મધ્ય ગુજરાતનાં લોકગીતોનું દસ્તાવેજીકરણ અને ડિજિટલ સંગ્રહ",
-    funder: "UGC મુખ્ય સંશોધન પ્રોજેક્ટ (ઉદાહરણ)",
-    period: "ચાલુ",
-    status: "ongoing",
-    role: "મુખ્ય સંશોધક",
-    summary:
-      "ખેડા, પંચમહાલ અને વડોદરા જિલ્લાનાં લગ્નગીતો, ઋતુગીતો અને શ્રમગીતોનું ધ્વનિમુદ્રણ, લિપ્યંતર અને ટીકા સાથેનું સંપાદન.",
-  },
-  {
-    title: "અનુઆધુનિક ગુજરાતી નવલકથામાં નગરચેતના",
-    funder: "યુનિવર્સિટી સંશોધન અનુદાન (ઉદાહરણ)",
-    period: "પૂર્ણ",
-    status: "completed",
-    role: "મુખ્ય સંશોધક",
-    summary:
-      "૧૯૮૦ પછીની ગુજરાતી નવલકથામાં શહેરીકરણ, સ્થળાંતર અને ઓળખના પ્રશ્નોનું વિવેચનાત્મક વિશ્લેષણ.",
-  },
-  {
-    title: "ગુજરાતી બોલીઓનો સમાજભાષાવૈજ્ઞાનિક નકશો",
-    funder: "આંતર-યુનિવર્સિટી સહયોગ (ઉદાહરણ)",
-    period: "ચાલુ",
-    status: "ongoing",
-    role: "સહ-સંશોધક",
-    summary: "ચરોતરી, સુરતી અને કાઠિયાવાડી બોલીઓમાં શબ્દભંડોળ અને ઉચ્ચારપરિવર્તનનો તુલનાત્મક અભ્યાસ.",
-  },
+  { title: "ફેલોશિપ", funder: "ભારતીય ઉચ્ચ અધ્યયન સંસ્થાન (IIAS), શિમલા", period: "2005 – 2008", status: "completed", role: "ફેલો" },
+  { title: "માઇનર રિસર્ચ પ્રોજેક્ટ", funder: "UGC, નવી દિલ્હી", period: "2012 – 2014", status: "completed", role: "મુખ્ય સંશોધક" },
+  { title: "ફેલોશિપ", funder: "સાહિત્ય અકાદમી, નવી દિલ્હી", period: "2003 – 2005", status: "completed", role: "ફેલો" },
+  { title: "ફેલોશિપ", funder: "સંસ્કૃતિ વિભાગ, ભારત સરકાર, નવી દિલ્હી", period: "2000 – 2002", status: "completed", role: "ફેલો" },
+  { title: "માઇનર રિસર્ચ પ્રોજેક્ટ", funder: "M.S. યુનિવર્સિટી ઑફ બરોડા", period: "2001 – 2002", status: "completed", role: "મુખ્ય સંશોધક" },
+  { title: "માઇનર રિસર્ચ પ્રોજેક્ટ", funder: "M.S. યુનિવર્સિટી ઑફ બરોડા", period: "2000 – 2001", status: "completed", role: "મુખ્ય સંશોધક" },
 ];
 
-export const conferencePresentations: ConferencePresentation[] = [
-  {
-    title: "લોકગીતોમાં સ્ત્રીસ્વર: પરંપરા અને પ્રતિકાર",
-    event: "રાષ્ટ્રીય પરિસંવાદ — ભારતીય લોકસાહિત્ય",
-    place: "અમદાવાદ",
-    year: 2024,
-    type: "keynote",
-  },
-  {
-    title: "આધુનિક ગુજરાતી કવિતામાં નગરબોધ",
-    event: "ગુજરાતી સાહિત્ય પરિષદ અધિવેશન",
-    place: "સુરત",
-    year: 2023,
-    type: "paper",
-  },
-  {
-    title: "Oral Narratives of Central Gujarat: Method and Archive",
-    event: "International Conference on South Asian Folklore",
-    place: "New Delhi",
-    year: 2022,
-    type: "invited",
-  },
-  {
-    title: "ગુજરાતી ભાષાશિક્ષણમાં ડિજિટલ સાધનો",
-    event: "UGC પ્રાયોજિત કાર્યશાળા",
-    place: "વડોદરા",
-    year: 2021,
-    type: "paper",
-  },
-];
+// TODO: add individual seminar / conference papers when available
+export const conferencePresentations: ConferencePresentation[] = [];
 
-export const supervision: SupervisionRecord[] = [
-  { degree: "Ph.D.", topic: "ગુજરાતી દલિત ટૂંકી વાર્તામાં પ્રતિરોધની ચેતના", year: "ચાલુ", status: "ongoing" },
-  { degree: "Ph.D.", topic: "પંચમહાલના આદિવાસી લોકગીતો: સ્વરૂપ અને સંદર્ભ", year: "ચાલુ", status: "ongoing" },
-  { degree: "Ph.D.", topic: "અનુઆધુનિક ગુજરાતી કવિતામાં ભાષાપ્રયોગ", year: "એનાયત", status: "awarded" },
-  { degree: "Ph.D.", topic: "ગુજરાતી નાટકમાં મિથનું પુનઃસર્જન", year: "એનાયત", status: "awarded" },
-  { degree: "M.Phil.", topic: "ભવાઈના વેશોમાં સામાજિક વ્યંગ", year: "એનાયત", status: "awarded" },
-  { degree: "M.A. Dissertation", topic: "ચરોતરી બોલીનો શબ્દકોશીય અભ્યાસ", year: "સબમિટ", status: "submitted" },
-];
+export const seminarNote =
+  "ગુજરાતી સાહિત્ય પરિષદ, ગુજરાતી સાહિત્ય અધ્યાપક સંઘ અને ‘અક્ષરા’ જેવી સંસ્થાઓના અગ્રણી સભ્ય તરીકે અનેક પરિસંવાદો અને પરિષદોનું સંકલન કર્યું છે.";
+
+// TODO: add thesis topics of supervised scholars when available
+export const supervision: SupervisionRecord[] = [];
 
 export const supervisionStats = [
-  { value: "12+", label: "Ph.D. માર્ગદર્શન (ઉદાહરણ)" },
-  { value: "6", label: "હાલના સંશોધકો (ઉદાહરણ)" },
-  { value: "25+", label: "M.Phil./ડિઝર્ટેશન (ઉદાહરણ)" },
+  { value: "9", label: "કુલ Ph.D. સંશોધકો" },
+  { value: "6", label: "Ph.D. પૂર્ણ" },
+  { value: "3", label: "હાલ ચાલુ" },
 ];
 
 export const collaborations: Collaboration[] = [
   {
-    institution: "ગુજરાત યુનિવર્સિટી, ભાષાસાહિત્ય ભવન",
-    nature: "સંયુક્ત પરિસંવાદો અને સંશોધન વિનિમય",
+    institution: "ગુજરાતી સાહિત્ય પરિષદ",
+    nature: "મંત્રી (2014 – 2026) · સાહિત્યિક સામયિક ‘પરબ’નું સંપાદન",
     place: "અમદાવાદ",
   },
   {
-    institution: "ભાષા સંશોધન અને પ્રકાશન કેન્દ્ર",
-    nature: "આદિવાસી બોલીઓ અને મૌખિક પરંપરાનું દસ્તાવેજીકરણ",
+    institution: "અક્ષરા",
+    nature: "પ્રમુખ (2010 – 2026) · ગુજરાતી વિભાગ સાથે ઇન્ટર્નશિપ",
     place: "વડોદરા",
   },
   {
     institution: "સાહિત્ય અકાદમી",
-    nature: "અનુવાદ કાર્યશાળા અને વ્યાખ્યાનો",
+    nature: "પુરસ્કાર પસંદગી સમિતિના સભ્ય (2008, 2012) · ફેલોશિપ",
     place: "નવી દિલ્હી",
+  },
+  {
+    institution: "ભારતીય ઉચ્ચ અધ્યયન સંસ્થાન (IIAS)",
+    nature: "ફેલોશિપ (2005 – 2008)",
+    place: "શિમલા",
   },
 ];
 
-export const events: AcademicEvent[] = [
-  {
-    slug: "folk-literature-workshop-2026",
-    title: "લોકસાહિત્ય ક્ષેત્રકાર્ય કાર્યશાળા",
-    date: "2026-11-14",
-    place: "ગુજરાતી વિભાગ, M.S. યુનિવર્સિટી",
-    kind: "કાર્યશાળા",
-  },
-  {
-    slug: "research-methodology-series-2026",
-    title: "સંશોધન પદ્ધતિ વ્યાખ્યાનમાળા — Ph.D. સંશોધકો માટે",
-    date: "2026-12-05",
-    place: "કલા વિદ્યાશાખા, વડોદરા",
-    kind: "વ્યાખ્યાનમાળા",
-  },
-  {
-    slug: "national-seminar-2027",
-    title: "રાષ્ટ્રીય પરિસંવાદ: એકવીસમી સદીનું ગુજરાતી સાહિત્ય",
-    date: "2027-01-22",
-    place: "M.S. યુનિવર્સિટી, વડોદરા",
-    kind: "પરિસંવાદ",
-  },
-];
+// Upcoming academic events — add entries here (or from the CMS) to show them on /blog
+export const events: AcademicEvent[] = [];

@@ -1,197 +1,196 @@
-import type { Publication, PublicationCategory } from "../types";
+import type { ImageAsset, Publication, PublicationCategory } from "../types";
 
-/** PLACEHOLDER publications — realistic Gujarati examples, replace with the verified bibliography. */
+/**
+ * Prof. Bharat Mehta's published books, grouped exactly as in his own list
+ * ("ભરત મહેતાના પ્રકાશિત પુસ્તકો"). Covers are photographs of the books.
+ * Publication years are not yet available — add `year` per book when known.
+ */
 
 export const publicationCategoryLabels: Record<PublicationCategory, { gu: string; en: string }> = {
-  book: { gu: "પુસ્તક", en: "Books" },
-  "research-paper": { gu: "શોધપત્ર", en: "Research Papers" },
-  "journal-article": { gu: "સંશોધન લેખ", en: "Journal Articles" },
-  "conference-paper": { gu: "પરિસંવાદ પત્ર", en: "Conference Papers" },
-  other: { gu: "અન્ય પ્રકાશન", en: "Other Publications" },
+  criticism: { gu: "વિવેચન", en: "Criticism" },
+  research: { gu: "સંશોધન", en: "Research" },
+  edited: { gu: "સંપાદન", en: "Edited Volumes" },
+  "study-series": { gu: "સર્જન સ્વાધ્યાય-શ્રેણી", en: "Author Study Series" },
+  "film-series": { gu: "ફિલ્મ-આસ્વાદ શ્રેણી", en: "Film Appreciation Series" },
 };
 
 /** Tabs used in the homepage publications section */
 export const publicationTabs: { id: string; label: string; categories: PublicationCategory[] | "all" }[] = [
   { id: "all", label: "બધા", categories: "all" },
-  { id: "books", label: "પુસ્તકો", categories: ["book"] },
-  { id: "articles", label: "સંશોધન લેખો", categories: ["journal-article"] },
-  { id: "papers", label: "શોધપત્રો", categories: ["research-paper", "conference-paper"] },
-  { id: "other", label: "અન્ય પ્રકાશનો", categories: ["other"] },
+  { id: "criticism", label: "વિવેચન", categories: ["criticism"] },
+  { id: "research", label: "સંશોધન", categories: ["research"] },
+  { id: "edited", label: "સંપાદન", categories: ["edited"] },
+  { id: "series", label: "સ્વાધ્યાય અને ફિલ્મ શ્રેણી", categories: ["study-series", "film-series"] },
 ];
 
+const parshva = "પાર્શ્વ પબ્લિકેશન, અમદાવાદ";
+
+function cover(slug: string, title: string): ImageAsset {
+  return {
+    src: `/images/books/${slug}.webp`,
+    alt: `‘${title}’ પુસ્તકનું મુખપૃષ્ઠ — ભરત મહેતા (Book cover)`,
+    width: 480,
+    height: 720,
+  };
+}
+
+type BookInput = Omit<Publication, "cover" | "keywords" | "description"> & {
+  description?: string;
+  keywords?: string[];
+  hasCover?: boolean;
+};
+
+function book({ hasCover = true, description, keywords, ...b }: BookInput): Publication {
+  const label = publicationCategoryLabels[b.category].gu;
+  return {
+    ...b,
+    description:
+      description ??
+      (b.role === "editor"
+        ? `${b.byline ? `${b.byline} ` : ""}‘${b.title}’ — ભરત મહેતા દ્વારા સંપાદિત (${label}).`
+        : `ભરત મહેતાનો ${label} ગ્રંથ.`),
+    keywords: [label, ...(keywords ?? [])],
+    ...(hasCover ? { cover: cover(b.slug, b.title) } : {}),
+  };
+}
+
 export const publications: Publication[] = [
-  {
-    slug: "adhunik-gujarati-sahitya-pariprekshya",
-    title: "ગુજરાતી આધુનિક સાહિત્ય — પરિપ્રેક્ષ્ય અને પ્રવાહો",
-    titleEn: "Modern Gujarati Literature: Perspectives and Trends",
-    category: "book",
-    year: 2024,
-    venue: "ગુર્જર ગ્રંથરત્ન કાર્યાલય, અમદાવાદ",
-    description:
-      "સુરેશ જોષીના આધુનિકતાવાદથી લઈને એકવીસમી સદીના સર્જન સુધી ગુજરાતી સાહિત્યના મુખ્ય પ્રવાહોનું વિવેચનાત્મક અવલોકન.",
-    keywords: ["આધુનિકતાવાદ", "નવલકથા", "કવિતા"],
-    pages: "312",
-    coverTone: "navy",
+  /* ---------------- વિવેચન (Criticism) ---------------- */
+  book({
+    slug: "pratibaddh",
+    title: "પ્રતિબદ્ધ",
+    titleEn: "Pratibaddh",
+    category: "criticism",
+    role: "author",
+    award: "ગુજરાત સાહિત્ય અકાદમી વિવેચન પુરસ્કાર (2006)",
     featured: true,
-  },
-  {
-    slug: "lokgeet-parampara-ane-pathantar",
-    title: "લોકગીત: પરંપરા અને પાઠાંતર",
-    titleEn: "Folk Songs: Tradition and Variants",
-    category: "book",
-    year: 2021,
-    venue: "પાર્શ્વ પબ્લિકેશન, અમદાવાદ",
-    description:
-      "મધ્ય ગુજરાતના ક્ષેત્રકાર્યમાંથી એકત્ર થયેલાં લોકગીતોના પાઠાંતરો, તેમનો સામાજિક સંદર્ભ અને ગાયનપરંપરાનો અભ્યાસ.",
-    keywords: ["લોકગીત", "ક્ષેત્રકાર્ય", "મૌખિક પરંપરા"],
-    pages: "248",
-    coverTone: "maroon",
+  }),
+  book({ slug: "kathamanthan", title: "કથામંથન", titleEn: "Kathamanthan", category: "criticism", role: "author", keywords: ["કથાસાહિત્ય"] }),
+  book({ slug: "natyanandi", title: "નાટ્યનાન્દી", titleEn: "Natyanandi", category: "criticism", role: "author", keywords: ["નાટક"] }),
+  book({ slug: "sandarbh-sanket", title: "સંદર્ભ સંકેત", titleEn: "Sandarbh Sanket", category: "criticism", role: "author" }),
+  book({ slug: "vivechanpurvak", title: "વિવેચનપૂર્વક", titleEn: "Vivechanpurvak", category: "criticism", role: "author" }),
+  book({ slug: "bharat-vakya", title: "ભરત વાક્ય", titleEn: "Bharat Vakya", category: "criticism", role: "author" }),
+  book({ slug: "rekhankit", title: "રેખાંકિત", titleEn: "Rekhankit", category: "criticism", role: "author" }),
+  book({
+    slug: "bharatiya-navalkatha",
+    title: "ભારતીય નવલકથા",
+    titleEn: "Bharatiya Navalkatha",
+    category: "criticism",
+    role: "author",
+    keywords: ["નવલકથા"],
     featured: true,
-  },
-  {
-    slug: "vivechanni-vat",
-    title: "વિવેચનની વાટ",
-    titleEn: "The Path of Criticism",
-    category: "book",
-    year: 2018,
-    venue: "રંગદ્વાર પ્રકાશન, અમદાવાદ",
-    description: "ગુજરાતી કવિતા, વાર્તા અને નાટક વિશેના વિવેચનલેખોનો સંગ્રહ — કૃતિલક્ષી અને સિદ્ધાંતલક્ષી બંને.",
-    keywords: ["વિવેચન", "કાવ્ય", "નાટક"],
-    pages: "276",
-    coverTone: "forest",
-  },
-  {
-    slug: "gujarati-bhasha-sanrachna-ane-boli",
-    title: "ગુજરાતી ભાષા: સંરચના અને બોલી",
-    titleEn: "Gujarati Language: Structure and Dialect",
-    category: "book",
-    year: 2015,
-    venue: "યુનિવર્સિટી ગ્રંથનિર્માણ બોર્ડ, ગુજરાત",
-    description: "અનુસ્નાતક વિદ્યાર્થીઓ માટે ગુજરાતી ધ્વનિવિચાર, રૂપવિચાર અને બોલીવૈવિધ્યનો પરિચયાત્મક ગ્રંથ.",
-    keywords: ["ભાષાવિજ્ઞાન", "બોલી", "પાઠ્યપુસ્તક"],
-    pages: "220",
-    coverTone: "ink",
-  },
-  {
-    slug: "sarvatantriyata-ma-samajik-chetna",
-    title: "સર્વતંત્રીયતામાં સામાજિક ચેતના",
-    titleEn: "Social Consciousness in Pluralism",
-    category: "journal-article",
-    year: 2024,
-    venue: "પરબ (ગુજરાતી સાહિત્ય પરિષદ)",
-    description: "સમકાલીન ગુજરાતી ટૂંકી વાર્તામાં બહુસ્વરતા અને સામાજિક ચેતનાના આલેખનનું વિશ્લેષણ.",
-    keywords: ["ટૂંકી વાર્તા", "સમાજ", "બહુસ્વરતા"],
-    coverTone: "sand",
+  }),
+  book({
+    slug: "meghani-sahityani-bhumika",
+    title: "મેઘાણી સાહિત્યની ભૂમિકા",
+    titleEn: "Meghani Sahityani Bhumika",
+    category: "criticism",
+    role: "author",
+    keywords: ["ઝવેરચંદ મેઘાણી"],
+  }),
+  book({
+    slug: "samkalin-gujarati-navalkatha",
+    title: "સમકાલીન ગુજરાતી નવલકથા",
+    titleEn: "Samkalin Gujarati Navalkatha",
+    category: "criticism",
+    role: "author",
+    keywords: ["નવલકથા"],
     featured: true,
-  },
-  {
-    slug: "narsinh-mehta-bhaktibodh",
-    title: "નરસિંહ મહેતાનાં પદોમાં ભક્તિબોધ અને સમાજદર્શન",
-    category: "journal-article",
-    year: 2022,
-    venue: "શબ્દસૃષ્ટિ (ગુજરાત સાહિત્ય અકાદમી)",
-    description: "નરસિંહનાં પ્રભાતિયાં અને પદોમાં વ્યક્ત થતી ભક્તિ અને સમતાના સામાજિક અર્થોનો પુનર્વિચાર.",
-    keywords: ["મધ્યકાલીન સાહિત્ય", "ભક્તિ", "નરસિંહ મહેતા"],
-    coverTone: "maroon",
-  },
-  {
-    slug: "bhavai-vesh-vyangya",
-    title: "ભવાઈના વેશોમાં વ્યંગ અને પ્રતિરોધ",
-    category: "journal-article",
-    year: 2020,
-    venue: "ફાર્બસ ગુજરાતી સભા ત્રૈમાસિક",
-    description: "ભવાઈના પરંપરાગત વેશોમાં સત્તા અને સમાજવ્યવસ્થા પરના વ્યંગનું સાંસ્કૃતિક વાચન.",
-    keywords: ["ભવાઈ", "લોકનાટ્ય", "વ્યંગ"],
-    coverTone: "forest",
-  },
-  {
-    slug: "charotari-boli-shabdbhandol",
-    title: "ચરોતરી બોલીનું શબ્દભંડોળ: એક સમાજભાષાવૈજ્ઞાનિક અધ્યયન",
-    category: "research-paper",
-    year: 2023,
-    venue: "Indian Journal of Linguistics",
-    description: "ચરોતર પ્રદેશની બોલીમાં કૃષિ અને ગૃહજીવન સંબંધી શબ્દોના ઉપયોગ અને પરિવર્તનનો ક્ષેત્રઅભ્યાસ.",
-    keywords: ["બોલી", "સમાજભાષાવિજ્ઞાન", "ચરોતર"],
-    coverTone: "ink",
-  },
-  {
-    slug: "anuadhunik-navalkatha-nagarchetna",
-    title: "અનુઆધુનિક ગુજરાતી નવલકથામાં નગરચેતના",
-    category: "research-paper",
-    year: 2021,
-    venue: "Journal of the M.S. University of Baroda (Humanities)",
-    description: "શહેરીકરણ અને સ્થળાંતરના અનુભવને ગુજરાતી નવલકથા કેવી રીતે આલેખે છે તેનું વિવેચનાત્મક અધ્યયન.",
-    keywords: ["નવલકથા", "નગર", "અનુઆધુનિકતા"],
-    coverTone: "navy",
-  },
-  {
-    slug: "dalit-varta-pratirodh",
-    title: "ગુજરાતી દલિત વાર્તામાં પ્રતિરોધનું સૌંદર્યશાસ્ત્ર",
-    category: "research-paper",
-    year: 2019,
-    venue: "Studies in Indian Literatures",
-    description: "દલિત ટૂંકી વાર્તામાં ભાષા, સ્વરૂપ અને અનુભવની પ્રામાણિકતા દ્વારા ઘડાતા પ્રતિરોધનો અભ્યાસ.",
-    keywords: ["દલિત સાહિત્ય", "ટૂંકી વાર્તા", "સૌંદર્યશાસ્ત્ર"],
-    coverTone: "sand",
-  },
-  {
-    slug: "lokgeet-strisvar",
-    title: "લોકગીતોમાં સ્ત્રીસ્વર: પરંપરા અને પ્રતિકાર",
-    category: "conference-paper",
-    year: 2024,
-    venue: "રાષ્ટ્રીય પરિસંવાદ — ભારતીય લોકસાહિત્ય, અમદાવાદ",
-    description: "લગ્નગીતો અને ઋતુગીતોમાં સ્ત્રીના અનુભવ અને પ્રતિકારના સૂક્ષ્મ સ્વરોનું વિશ્લેષણ.",
-    keywords: ["લોકગીત", "સ્ત્રીવાદ", "પરિસંવાદ"],
-    coverTone: "maroon",
-  },
-  {
-    slug: "adhunik-kavita-nagarbodh",
-    title: "આધુનિક ગુજરાતી કવિતામાં નગરબોધ",
-    category: "conference-paper",
-    year: 2023,
-    venue: "ગુજરાતી સાહિત્ય પરિષદ અધિવેશન, સુરત",
-    description: "લાભશંકર ઠાકર, સિતાંશુ યશશ્ચંદ્ર અને અન્ય કવિઓમાં નગરજીવનના અનુભવનું આલેખન.",
-    keywords: ["કવિતા", "આધુનિકતા", "નગર"],
-    coverTone: "navy",
-  },
-  {
-    slug: "digital-bhashashikshan",
-    title: "ગુજરાતી ભાષાશિક્ષણમાં ડિજિટલ સાધનો",
-    category: "conference-paper",
-    year: 2021,
-    venue: "UGC પ્રાયોજિત કાર્યશાળા, વડોદરા",
-    description: "ઑનલાઇન શબ્દકોશ, યુનિકોડ સાધનો અને ડિજિટલ ગ્રંથાલયોનો વર્ગખંડમાં ઉપયોગ.",
-    keywords: ["ભાષાશિક્ષણ", "ડિજિટલ", "શિક્ષણશાસ્ત્ર"],
-    coverTone: "ink",
-  },
-  {
-    slug: "sampadan-madhyakalin-akhyan",
-    title: "મધ્યકાલીન આખ્યાન સંચય (સંપાદન)",
-    category: "other",
-    year: 2022,
-    venue: "ગુજરાતી વિભાગ, M.S. યુનિવર્સિટી",
-    description: "પ્રેમાનંદ અને અન્ય આખ્યાનકારોની પસંદગીની કૃતિઓનું ટિપ્પણ સાથેનું સંપાદન — અનુસ્નાતક અભ્યાસક્રમ માટે.",
-    keywords: ["સંપાદન", "આખ્યાન", "પ્રેમાનંદ"],
-    coverTone: "sand",
-  },
-  {
-    slug: "anuvad-lokkatha",
-    title: "Folk Tales of Central Gujarat (અનુવાદ)",
-    category: "other",
-    year: 2019,
-    venue: "સાહિત્ય અકાદમી અનુવાદ કાર્યશાળા",
-    description: "મધ્ય ગુજરાતની પસંદગીની લોકકથાઓનો અંગ્રેજી અનુવાદ, પ્રસ્તાવના અને સાંસ્કૃતિક ટિપ્પણ સાથે.",
-    keywords: ["અનુવાદ", "લોકકથા"],
-    coverTone: "forest",
-  },
-  {
-    slug: "pustak-samiksha-parab",
-    title: "ગ્રંથ સમીક્ષા: સમકાલીન ગુજરાતી નવલિકા",
-    category: "other",
-    year: 2017,
-    venue: "પરબ",
-    description: "તાજેતરના વાર્તાસંગ્રહોની સમીક્ષા અને ગુજરાતી નવલિકાના બદલાતા સ્વરૂપ પર નોંધ.",
-    keywords: ["સમીક્ષા", "નવલિકા"],
-    coverTone: "navy",
-  },
+  }),
+  book({
+    slug: "samkalin-gujarati-navlika",
+    title: "સમકાલીન ગુજરાતી નવલિકા",
+    titleEn: "Samkalin Gujarati Navlika",
+    category: "criticism",
+    role: "author",
+    keywords: ["નવલિકા", "ટૂંકી વાર્તા"],
+  }),
+  book({ slug: "sangnasanyog", title: "સંજ્ઞાસંયોગ", titleEn: "Sangnasanyog", category: "criticism", role: "author", publisher: parshva }),
+  book({
+    slug: "krutisamipe-sarjaksamipe",
+    title: "કૃતિસમીપે, સર્જકસમીપે",
+    titleEn: "Krutisamipe, Sarjaksamipe",
+    category: "criticism",
+    role: "author",
+    publisher: parshva,
+    featured: true,
+  }),
+
+  /* ---------------- સંશોધન (Research) ---------------- */
+  book({
+    slug: "jayant-gaditnu-kathasahitya",
+    title: "જયંત ગાડીતનું કથાસાહિત્ય",
+    titleEn: "Jayant Gaditnu Kathasahitya",
+    category: "research",
+    role: "author",
+    keywords: ["જયંત ગાડીત", "કથાસાહિત્ય"],
+  }),
+  book({
+    slug: "char-navalkathakaro",
+    title: "ચાર નવલકથાકારો",
+    titleEn: "Char Navalkathakaro",
+    category: "research",
+    role: "author",
+    keywords: ["નવલકથા"],
+    featured: true,
+  }),
+  book({
+    slug: "kalakarno-itihasbodh",
+    title: "કલાકારનો ઇતિહાસબોધ",
+    titleEn: "Kalakarno Itihasbodh",
+    category: "research",
+    role: "author",
+    award: "ગુજરાત સાહિત્ય અકાદમી વિવેચન પુરસ્કાર (2007)",
+    keywords: ["ઇતિહાસબોધ"],
+    featured: true,
+  }),
+  book({
+    slug: "arnoldno-kavyavichar",
+    title: "આર્નોલ્ડનો કાવ્યવિચાર",
+    titleEn: "Arnoldno Kavyavichar",
+    category: "research",
+    role: "author",
+    keywords: ["મેથ્યુ આર્નોલ્ડ", "કાવ્યશાસ્ત્ર"],
+  }),
+
+  /* ---------------- સંપાદન (Edited) ---------------- */
+  book({ slug: "gyanpith-puraskrut-navalkatha", title: "જ્ઞાનપીઠ પુરસ્કૃત નવલકથા", category: "edited", role: "editor", keywords: ["નવલકથા"] }),
+  book({ slug: "mari-hakikat", title: "મારી હકીકત", byline: "કવિ નર્મદકૃત", category: "edited", role: "editor", keywords: ["નર્મદ", "આત્મકથા"] }),
+  book({ slug: "sannidhan", title: "સન્નિધાન (૧ થી ૩)", category: "edited", role: "editor", hasCover: false }),
+  book({ slug: "vivechanna-vividh-abhigamo", title: "વિવેચનના વિવિધ અભિગમો", category: "edited", role: "editor", keywords: ["વિવેચન સિદ્ધાંત"] }),
+  book({
+    slug: "tagorni-shreshth-vartao",
+    title: "રવીન્દ્રનાથ ટાગોરની શ્રેષ્ઠ વાર્તાઓ",
+    byline: "અનુવાદ: રમણલાલ સોની",
+    category: "edited",
+    role: "editor",
+    keywords: ["ટાગોર", "વાર્તા"],
+  }),
+  book({ slug: "himanshi-shelatno-vartalok", title: "હિમાંશી શેલતનો વાર્તાલોક", category: "edited", role: "editor", keywords: ["હિમાંશી શેલત", "વાર્તા"] }),
+  book({
+    slug: "mohan-parmar-adhyayan-granth-1",
+    title: "મોહન પરમાર અધ્યયન ગ્રંથ-૧ (નવલિકા)",
+    category: "edited",
+    role: "editor",
+    keywords: ["મોહન પરમાર", "નવલિકા"],
+  }),
+  book({ slug: "kafka-ane-metamorphosis", title: "કાફકા અને મેટામોર્ફોસીસ", category: "edited", role: "editor", publisher: parshva, keywords: ["કાફકા"] }),
+
+  /* ---------------- સર્જન સ્વાધ્યાય-શ્રેણી ---------------- */
+  book({ slug: "tagorni-vartakala", title: "ટાગોરની વાર્તાકલા", category: "study-series", role: "editor", publisher: parshva, keywords: ["ટાગોર"] }),
+  book({ slug: "mantoni-vartakala", title: "મંટોની વાર્તાકલા", category: "study-series", role: "editor", publisher: parshva, keywords: ["મંટો"] }),
+  book({ slug: "valamana", title: "વળામણાં", byline: "પન્નાલાલ પટેલકૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "satyana-prayogo", title: "સત્યના પ્રયોગો", byline: "ગાંધીજીકૃત", category: "study-series", role: "editor", hasCover: false }),
+  book({ slug: "tamas", title: "તમસ", byline: "ભીષ્મ સાહનીકૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "gora", title: "ગોરા", byline: "રવીન્દ્રનાથ ટાગોરકૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "badalati-kshitij", title: "બદલાતી ક્ષિતિજ", byline: "જયંત ગાડીત કૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "sharvilak", title: "શર્વિલક", byline: "રસિકલાલ પરીખ", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "iliad", title: "ઈલિયડ", byline: "હોમર", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "siddharth", title: "સિદ્ધાર્થ", byline: "હરમાન હેસકૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "sanskar", title: "સંસ્કાર", byline: "યુ. આર. અનંતમૂર્તિ કૃત", category: "study-series", role: "editor", publisher: parshva }),
+  book({ slug: "the-waste-land", title: "ધ વેસ્ટલેન્ડ (મરુભૂમિ)", byline: "ટી. એસ. એલિયટ કૃત", category: "study-series", role: "editor", publisher: parshva }),
+
+  /* ---------------- ફિલ્મ-આસ્વાદ શ્રેણી ---------------- */
+  book({ slug: "mirch-masala", title: "મિર્ચ મસાલા", category: "film-series", role: "editor", keywords: ["ફિલ્મ"] }),
+  book({ slug: "charulata", title: "ચારુલતા", byline: "રવીન્દ્રનાથ ટાગોરની વાર્તા પર આધારિત સત્યજિત રાયની ફિલ્મ", category: "film-series", role: "editor", keywords: ["ફિલ્મ", "સત્યજિત રાય"] }),
 ];

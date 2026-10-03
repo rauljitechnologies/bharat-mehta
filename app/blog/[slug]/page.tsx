@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Clock, UserRound } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock } from "lucide-react";
 import { ShareButtons } from "@/components/pages/ShareButtons";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -10,6 +10,7 @@ import { PostCard } from "@/components/ui/PostCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getPost, getPosts, getRelatedPosts, readingMinutes } from "@/lib/api";
 import { blogCategoryLabels } from "@/lib/content/blog";
+import { images } from "@/lib/content/images";
 import { formatDate } from "@/lib/format";
 import { articleJsonLd, buildMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
@@ -91,8 +92,14 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
               </p>
               <h1 className="mt-5 font-serif text-[1.875rem] leading-snug font-bold sm:text-[2.5rem]">{post.title}</h1>
               <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/75">
-                <span className="inline-flex items-center gap-1.5">
-                  <UserRound className="size-4 text-gold" aria-hidden="true" />
+                <span className="inline-flex items-center gap-2">
+                  <Image
+                    src={images.headshot.src}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="size-7 rounded-full object-cover ring-2 ring-gold/60"
+                  />
                   <Link href="/about" rel="author" className="hover:text-gold-light">
                     {post.author}
                   </Link>
