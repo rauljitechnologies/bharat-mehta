@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dr. Bharat Mehta — Academic Website
 
-## Getting Started
-
-First, run the development server:
+Gujarati-first academic website (Next.js 16 · TypeScript · Tailwind CSS v4 · Lucide).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set `NEXT_PUBLIC_SITE_URL=https://your-domain` in production. Canonical URLs, Open Graph, sitemap, robots and JSON-LD all read from it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | Purpose |
+| --- | --- |
+| `lib/types.ts` | Content models (profile, research, publications, courses, guidance, posts, events) |
+| `lib/content/*` | Placeholder content. **Replace with verified data before launch** |
+| `lib/api.ts` | Async data layer. The only module to change when connecting a CMS/API |
+| `lib/seo.ts` | Metadata builder + JSON-LD (Person, CollegeOrUniversity, WebSite, Article, BreadcrumbList) |
+| `components/home/*` | Homepage sections |
+| `components/ui/*` | Reusable primitives (buttons, cards, headings, breadcrumbs, form, map) |
+| `components/pages/*` | Client explorers (publications filter, blog filter, share) |
+| `app/api/contact` | Validated contact endpoint. Wire it to an email provider |
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Before launch
+- Replace placeholder biography, degrees, awards, publications, posts and phone number (`lib/content/`).
+- Add an official portrait at `profile.portrait` (a monogram placeholder is shown until then).
+- Replace `public/cv/bharat-mehta-cv.pdf` (sample generated from placeholder data).
+- Connect `/api/contact` to an email service; set real social links.
+- Photos are openly licensed from Wikimedia Commons. Credits are listed at `/about#credits`.
